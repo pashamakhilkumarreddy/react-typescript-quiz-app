@@ -12,6 +12,10 @@ const {
     PORT,
   },
 } = require('./config');
+const {
+  connectToDB,
+  getDBURI,
+} = require('./helpers');
 
 const app = new Koa();
 const db = new Map();
@@ -44,6 +48,13 @@ require('./routes')({
   app,
 });
 
-app.listen(PORT, () => {
-  console.info(`The application is up and running on PORT ${PORT}`);
+getDBURI().then((mongoURI) => {
+  connectToDB(mongoURI).then(() => {
+    console.info('Successfully connected to the database');
+    app.listen(PORT, () => {
+      console.info(`The application is up and running on PORT ${PORT}`);
+    });
+  }).catch((err) => {
+    console.error(err);
+  });
 });

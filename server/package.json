@@ -15,6 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "@koa/cors": "^3.1.0",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.0",
@@ -26,7 +27,8 @@
     "koa-response-time": "^2.1.0",
     "koa-router": "^9.1.0",
     "mongoose": "^5.9.25",
-    "pm2": "^4.4.0"
+    "pm2": "^4.4.0",
+    "uuid": "^8.2.0"
   },
   "devDependencies": {
     "eslint": "^7.4.0",
