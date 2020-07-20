@@ -64,4 +64,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  position: relative;
+  min-height: 100vh;
+}
+
+.flex-center {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.align-center {
+  text-align: center;
 }
