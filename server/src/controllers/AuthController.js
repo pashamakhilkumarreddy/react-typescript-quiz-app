@@ -1,19 +1,54 @@
+const {
+  User,
+} = require('../models');
+const {
+  genUsername,
+} = require('../utils');
+
 module.exports = {
-  async login(ctx) {
+  async register(ctx) {
     try {
-      ctx.response.status = 200;
+      const {
+        email,
+        password,
+      } = ctx.request.body;
+      const user = await User.findOne({
+        email,
+      });
+      if (!user) {
+        const username = genUsername();
+        const newUser = new User({
+          email,
+          username,
+          password,
+        });
+        await newUser.save();
+        if (!newUser) {
+          throw new Error('Unable to create a new user!');
+        }
+        ctx.response.status = 201;
+        ctx.body = {
+          success: false,
+          status: 201,
+          statusMessages: [
+            'Successfully created a new user',
+          ],
+        };
+        return;
+      }
+      ctx.response.status = 403;
       ctx.body = {
-        error: false,
-        status: 200,
+        success: false,
+        status: 403,
         statusMessages: [
-          'Internal server error',
+          'A user already exists with the given email',
         ],
       };
     } catch (err) {
       console.error(err);
       ctx.response.status = 500;
       ctx.body = {
-        error: true,
+        success: true,
         status: 500,
         statusMessages: [
           'Internal server error',
@@ -21,21 +56,56 @@ module.exports = {
       };
     }
   },
-  async register(ctx) {
+  async login(ctx) {
     try {
-      ctx.response.status = 201;
+      const {
+        email,
+        password,
+      } = ctx.request.body;
+      const user = await User.findOne({
+        email,
+      });
+      if (!user) {
+        ctx.response.status = 401;
+        ctx.body = {
+          success: false,
+          status: 401,
+          statusMessages: [
+            'No user found with the given email',
+          ],
+        };
+        return;
+      }
+      const isUserAuthenticated = await user.comparePassword(password);
+      if (!isUserAuthenticated) {
+        ctx.response.status = 403;
+        ctx.body = {
+          status: 403,
+          success: false,
+          statusMessages: [
+            'Login information is incorrect. Please check your password.',
+          ],
+        };
+        return;
+      }
+      ctx.response.status = 200;
       ctx.body = {
-        error: false,
         status: 200,
+        success: false,
+        user: user.formattedUserObj(),
+        tokens: {
+          refreshToken: user.createRefreshToken(),
+          accessToken: user.createAccessToken(),
+        },
         statusMessages: [
-          'Internal server error',
+          'Login is successfull',
         ],
       };
     } catch (err) {
       console.error(err);
       ctx.response.status = 500;
       ctx.body = {
-        error: true,
+        success: true,
         status: 500,
         statusMessages: [
           'Internal server error',

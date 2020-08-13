@@ -1,1 +1,5 @@
-module.exports = {};
+const checkAuthFields = require('./checkAuthFields');
+
+module.exports = {
+  ...checkAuthFields,
+};

@@ -10,23 +10,21 @@ const {
   sign,
 } = require('jsonwebtoken');
 const {
-  v1: uuidv1,
-} = require('uuid');
+  format,
+} = require('date-fns');
 
 const {
-  jwt,
+  jwt: {
+    JWT_SECRET,
+    JWT_REFRESH_TOKEN_EXPIRY,
+    JWT_ACCESS_TOKEN_EXPIRY,
+    JWT_ISSUER,
+  },
 } = require('../config');
 
 const {
   Schema,
 } = mongoose;
-
-const {
-  JWT_SECRET,
-  JWT_REFRESH_TOKEN_EXPIRY,
-  JWT_ACCESS_TOKEN_EXPIRY,
-  JWT_ISSUER,
-} = jwt;
 
 const UserSchema = new Schema({
   name: {
@@ -67,7 +65,6 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: [true, 'Password is required!'],
-    trim: true,
     minlength: [10, 'Password is too short!'],
   },
   phone: {
@@ -81,15 +78,16 @@ const UserSchema = new Schema({
     type: String,
     lowercase: true,
     trim: true,
-    enum: ['male', 'female'],
-    default: 'male',
+    enum: ['male', 'female', null],
+    default: null,
   },
   doj: {
     type: Date,
+    default: format(new Date(), 'yyyy-MM-dd'),
   },
   dob: {
     type: String,
-    default: Date.now,
+    default: null,
   },
   isAdmin: {
     type: Boolean,
@@ -130,11 +128,6 @@ UserSchema.methods.comparePassword = async function comparePassword(password) {
     console.error(err);
     throw err;
   }
-};
-
-UserSchema.methods.genUsername = function genUsername() {
-  const username = uuidv1();
-  return username;
 };
 
 UserSchema.methods.createRefreshToken = function createRefreshToken() {

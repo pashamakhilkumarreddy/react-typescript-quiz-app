@@ -15,7 +15,7 @@ const {
 const {
   connectToDB,
   getDBURI,
-} = require('./helpers');
+} = require('./utils');
 
 const app = new Koa();
 const db = new Map();
