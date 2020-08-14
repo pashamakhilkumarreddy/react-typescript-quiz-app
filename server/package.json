@@ -1,8 +1,10 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Quiz App Api Server",
   "main": "app.js",
+  "repository": "https://github.com/pashamakhilkumarreddy/react-typescript-quiz-app.git",
+  "author": "Pasham Akhil Kumar Reddy <pashamakhilkumarreddy@gmail.com>",
   "scripts": {
     "dev": "node src/app.js",
     "start": "nodemon src/app.js --exec \"npm run lint && node\"",
@@ -11,7 +13,6 @@
     "prod": "pm2 start src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
   "license": "MIT",
   "dependencies": {
     "@koa/cors": "^3.1.0",
@@ -27,8 +28,8 @@
     "koa-logger": "^3.2.1",
     "koa-ratelimit": "^4.2.1",
     "koa-response-time": "^2.1.0",
-    "koa-router": "^9.1.0",
-    "mongoose": "^5.9.28",
+    "koa-router": "^9.4.0",
+    "mongoose": "^5.10.0",
     "nodemailer": "^6.4.11",
     "pm2": "^4.4.0",
     "redis": "^3.0.2",

@@ -1,8 +1,12 @@
+# `docker build --rm --build-arg "NODE_VERSION=12.18.3-alpine3.12" -f Dockerfile .`
 FROM node:12.18.3-alpine3.12
 
-RUN apt-get update && \
-  apt-get -y install netcat && \
-  apt-get clean
+RUN apk update && \
+  apk upgrade && \
+  apk add netcat-openbsd && \
+  apk add --no-cache bash
+
+ENV NODE_ENV production
 
 WORKDIR /app
 
@@ -15,7 +19,6 @@ RUN npm prune --production
 
 RUN chown -R node:node ./
 
-# 
 USER node
 
 EXPOSE 5000
