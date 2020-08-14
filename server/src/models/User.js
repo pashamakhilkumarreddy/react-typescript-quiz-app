@@ -78,8 +78,8 @@ const UserSchema = new Schema({
     type: String,
     lowercase: true,
     trim: true,
-    enum: ['male', 'female', null],
-    default: null,
+    enum: ['male', 'female', 'null'],
+    default: 'null',
   },
   doj: {
     type: Date,

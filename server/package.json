@@ -22,13 +22,16 @@
     "koa": "^2.13.0",
     "koa-body": "^4.2.0",
     "koa-compress": "^5.0.1",
+    "koa-ejs": "^4.3.0",
     "koa-helmet": "^5.2.0",
     "koa-logger": "^3.2.1",
     "koa-ratelimit": "^4.2.1",
     "koa-response-time": "^2.1.0",
     "koa-router": "^9.1.0",
     "mongoose": "^5.9.28",
+    "nodemailer": "^6.4.11",
     "pm2": "^4.4.0",
+    "redis": "^3.0.2",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
