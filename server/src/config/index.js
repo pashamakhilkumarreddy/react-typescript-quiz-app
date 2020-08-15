@@ -1,19 +1,23 @@
 require('dotenv').config();
 
+const environment = process.env.NODE_ENV || 'development';
+
 module.exports = {
   server: {
     PORT: process.env.PORT || 5000,
+    HOST: process.env.HOST || (environment === 'production'
+      ? '127.0.0.1' : '0.0.0.0'),
   },
   db: {
     mongo: {
-      DB_USER: process.env.DB_USER || 'test',
-      DB_PASSWORD: process.env.DB_PASSWORD || 'test',
-      DB_HOST: process.env.DB_HOST || 'localhost',
-      DB_PORT: process.env.DB_PORT || '27017',
-      DB_NAME: process.env.DB_NAME || 'test',
+      DB_HOST: process.env.MONGO_HOST || '127.0.0.1',
+      DB_PORT: process.env.MONGO_PORT || '27017',
+      DB_USER: process.env.MONGO_USER || 'test',
+      DB_PASSWORD: process.env.MONGO_PASSWORD || 'test',
+      DB_NAME: process.env.MONGO_DBNAME || 'test',
     },
     redis: {
-      REDIS_HOST: process.env.REDIS_HOST || 'localhost',
+      REDIS_HOST: process.env.REDIS_HOST || '127.0.0.1',
       REDIS_PORT: process.env.REDIS_PORT || '6379',
       REDIS_PASSWORD: process.env.REDIS_PASSWORD || '',
     },

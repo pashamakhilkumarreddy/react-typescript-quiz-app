@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services: 
   api: 
@@ -9,14 +9,14 @@ services:
     container_name: koa-api
     restart: always
     env_file: .env
-    environment: 
+    environment:
+      - MONGO_HOST=mongo
+      - MONGO_PORT=$MONGO_PORT
       - MONGO_USERNAME=$MONGO_USERNAME
       - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=db
-      - MONGO_PORT=$MONGO_PORT
-      - MONGO_DB=$MONGO_DB 
+      - MONGO_DBNAME=$MONGO_DBNAME
     ports: 
-      - '80:5000'
+      - '8000:5000'
     networks: 
       - app-network
     volumes: 

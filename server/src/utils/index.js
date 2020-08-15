@@ -1,11 +1,11 @@
-const db = require('./db');
+const dbcon = require('./dbcon');
 const helpers = require('./helpers');
 const regex = require('./regex');
 const validations = require('./validations');
 const constants = require('./constants');
 
 module.exports = {
-  ...db,
+  ...dbcon,
   ...helpers,
   ...regex,
   ...validations,

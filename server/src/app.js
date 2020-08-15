@@ -10,6 +10,7 @@ const rateLimit = require('koa-ratelimit');
 const {
   server: {
     PORT,
+    HOST,
   },
 } = require('./config');
 const {
@@ -51,8 +52,8 @@ require('./routes')({
 getDBURI().then((mongoURI) => {
   connectToDB(mongoURI).then(() => {
     console.info('Successfully connected to the database');
-    app.listen(PORT, () => {
-      console.info(`The application is up and running on PORT ${PORT}`);
+    app.listen(PORT, HOST, () => {
+      console.info(`The application is up and running on http://${HOST}:${PORT}`);
     });
   }).catch((err) => {
     console.error(err);
