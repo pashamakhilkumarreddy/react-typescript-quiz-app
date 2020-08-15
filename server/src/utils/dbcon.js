@@ -5,26 +5,35 @@ const {
       DB_HOST,
       DB_PORT,
       DB_NAME,
-      // DB_USER,
-      // DB_PASSWORD,
+      DB_USER,
+      DB_PASSWORD,
     },
   },
 } = require('../config');
 
-const getDBURI = (dbHost = DB_HOST, dbName = DB_NAME, dbPort = DB_PORT) => {
-  const uri = `mongodb://${dbHost}:${dbPort}/${dbName}`;
+const getDBURI = ({
+  dbHost = DB_HOST,
+  dbPort = DB_PORT,
+  dbName = DB_NAME,
+  dbUser = DB_USER,
+  dbPassword = DB_PASSWORD,
+}) => {
+  const uri = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
   return Promise.resolve(uri);
 };
 
 const connectToDB = (dbURI) => {
   try {
     const mongoOptions = {
-      // user: process.env.DB_USER,
-      // pass: process.env.DB_PASS,
+      user: DB_USER,
+      pass: DB_PASSWORD,
+      useCreateIndex: true,
       useNewUrlParser: true,
       useFindAndModify: false,
-      useCreateIndex: true,
       useUnifiedTopology: true,
+      // reconnectTries: Number.MAX_VALUE,
+      // reconnectInterval: 500,
+      connectTimeoutMS: 10000,
     };
     return Promise.resolve(mongoose.connect(dbURI, mongoOptions));
   } catch (err) {

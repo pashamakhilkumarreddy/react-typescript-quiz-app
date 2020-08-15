@@ -49,13 +49,14 @@ require('./routes')({
   app,
 });
 
-getDBURI().then((mongoURI) => {
+getDBURI({}).then((mongoURI) => {
   connectToDB(mongoURI).then(() => {
     console.info('Successfully connected to the database');
     app.listen(PORT, HOST, () => {
       console.info(`The application is up and running on http://${HOST}:${PORT}`);
     });
   }).catch((err) => {
+    console.error('Unable to connect to the database');
     console.error(err);
   });
 });
