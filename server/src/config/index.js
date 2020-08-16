@@ -5,8 +5,9 @@ const environment = process.env.NODE_ENV || 'development';
 module.exports = {
   server: {
     PORT: process.env.PORT || 5000,
+    ENV: environment,
     HOST: process.env.HOST || (environment === 'production'
-      ? '127.0.0.1' : '0.0.0.0'),
+      ? '0.0.0.0' : '127.0.0.1'),
   },
   db: {
     mongo: {

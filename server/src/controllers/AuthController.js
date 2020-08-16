@@ -22,13 +22,13 @@ module.exports = {
           username,
           password,
         });
-        await newUser.save();
         if (!newUser) {
           throw new Error('Unable to create a new user!');
         }
+        await newUser.save();
         ctx.response.status = 201;
         ctx.body = {
-          success: false,
+          success: true,
           status: 201,
           statusMessages: [
             'Successfully created a new user',
@@ -48,7 +48,7 @@ module.exports = {
       console.error(err);
       ctx.response.status = 500;
       ctx.body = {
-        success: true,
+        success: false,
         status: 500,
         statusMessages: [
           'Internal server error',
@@ -91,7 +91,7 @@ module.exports = {
       ctx.response.status = 200;
       ctx.body = {
         status: 200,
-        success: false,
+        success: true,
         user: user.formattedUserObj(),
         tokens: {
           refreshToken: user.createRefreshToken(),
@@ -105,7 +105,7 @@ module.exports = {
       console.error(err);
       ctx.response.status = 500;
       ctx.body = {
-        success: true,
+        success: false,
         status: 500,
         statusMessages: [
           'Internal server error',

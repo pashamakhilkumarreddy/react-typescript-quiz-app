@@ -15,6 +15,9 @@ services:
       - MONGO_USERNAME=$MONGO_USERNAME
       - MONGO_PASSWORD=$MONGO_PASSWORD
       - MONGO_DBNAME=$MONGO_DBNAME
+      - REDIS_HOST=$REDIS_HOST
+      - REDIS_PORT=$REDIS_PORT
+      - REDIS_PASSWORD=$REDIS_PASSWORD
     ports: 
       - '8000:5000'
     networks: 
@@ -24,9 +27,10 @@ services:
       - node_modules:/home/node/app/node_modules
     links: 
       - mongo
+      - redis
     depends_on: 
       - mongo
-    command: npm run dev
+    command: ./run.sh
   mongo: 
     image: mongo
     container_name: mongo
@@ -41,6 +45,19 @@ services:
       - app-network
     volumes: 
       - ./dbdata:/data/db
+  redis:
+    image: redis
+    container_name: redis
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - REDIS_PASSWORD=$REDIS_PASSWORD
+    ports:
+      - '6379:6379'
+    networks: 
+      - 'app-network'
+    volumes: 
+      - ./redis-data:/var/lib/redis
 
 networks: 
   app-network:

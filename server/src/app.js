@@ -11,6 +11,7 @@ const {
   server: {
     PORT,
     HOST,
+    ENV,
   },
 } = require('./config');
 const {
@@ -53,7 +54,7 @@ getDBURI({}).then((mongoURI) => {
   connectToDB(mongoURI).then(() => {
     console.info('Successfully connected to the database');
     app.listen(PORT, HOST, () => {
-      console.info(`The application is up and running on http://${HOST}:${PORT}`);
+      console.info(`The application is up and running on http://${HOST}:${PORT} in ${ENV}`);
     });
   }).catch((err) => {
     console.error('Unable to connect to the database');
